@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lbgcalc
+  name: vatcalc
   labels:
-    app: lbgcalc
+    app: vatcalc
 spec:
   replicas: 5
   selector:
     matchLabels:
-      app: lbgcalc
+      app: vatcalc
       
   template:
     metadata:
       labels:
-        app: lbgcalc
-        tier: lbgcalc
+        app: vatcalc
+        tier: vatcalc
     spec:
       automountServiceAccountToken: false
       containers:
-        - name: lbgcalc
-          image: qatrainer/vat-calc:latest
+        - name: vatcalc
+          image: pmwtraining/vat-calc:latest
           imagePullPolicy: Always
           resources:
             requests:
@@ -32,20 +32,20 @@ spec:
               ephemeral-storage: "4Gi"
           ports:
           - containerPort: 80
-            name: lbgcalc
+            name: vatcalc
             
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: lbgcalc
+  name: vatcalc
   labels:
-    app: lbgcalc
+    app: vatcalc
 spec:
   ports:
     - port: 80
       targetPort: 80
   selector:
-    app: lbgcalc
-    tier: lbgcalc
+    app: vatcalc
+    tier: vatcalc
   type: LoadBalancer
